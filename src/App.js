@@ -1,7 +1,14 @@
+import Login from "./components/Login/Login";
+import { Route, Switch } from "react-router-dom";
+
 function App() {
   return (
-    <div className=" text-3xl font-semibold text-sky-500">
-      I am building a linkedin clone!
+    <div>
+      <Switch>
+        <Route exact path="/">
+          <Login />
+        </Route>
+      </Switch>
     </div>
   );
 }
