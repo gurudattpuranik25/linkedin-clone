@@ -1,0 +1,15 @@
+body {
+  box-sizing: border-box;
+}
+
+.hovered:hover {
+  transform: scale(1.1);
+  transition: all ease-in-out 0.1s;
+}
+
+.fixedNav {
+  width: 100%;
+  position: fixed;
+  background-color: white;
+  z-index: 10;
+}
