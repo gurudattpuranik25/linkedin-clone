@@ -23,7 +23,7 @@ function Context({ children }) {
 
   const history = useHistory();
 
-  console.log(auth);
+  // console.log(auth);
 
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider).then(() => {

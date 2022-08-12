@@ -6,17 +6,17 @@ import avatar from "../../images/avatar.png";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Context/Context";
 
-function Main() {
+function Profile() {
   const { userName, userImage } = useContext(AuthContext);
 
   return (
     <div>
-      <div className="  ">
+      <div>
         <Header />
       </div>
       <div className="  w-screen bg-gray-200">
         <div className=" w-[75%] py-5 h-screen m-auto flex gap-6">
-          <div className=" w-[75%] h-[50%] bg-white rounded-xl mt-16">
+          <div className=" flex-1 bg-white rounded-xl mt-16">
             <img
               src={profileBg}
               className="h-[10rem] w-full bg-white rounded-t-xl"
@@ -47,4 +47,4 @@ function Main() {
   );
 }
 
-export default Main;
+export default Profile;

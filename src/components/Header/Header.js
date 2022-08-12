@@ -16,7 +16,7 @@ import "./Header.css";
 function Header() {
   const { signOutUser, isAuth, userName, userImage } = useContext(AuthContext);
 
-  console.log(isAuth);
+  // console.log(isAuth);
 
   return (
     <div>
@@ -38,14 +38,18 @@ function Header() {
               </div>
             </div>
             <div className=" flex items-center gap-8">
-              <div className=" hovered flex flex-col items-center cursor-pointer">
-                <HomeIcon className=" text-gray-600  " />
-                <span className=" text-gray-500 text-xs">Home</span>
-              </div>
-              <div className="hovered flex flex-col items-center cursor-pointer ">
-                <PeopleIcon className=" text-gray-600  " />
-                <span className=" text-gray-500 text-xs">People</span>
-              </div>
+              <Link to="/feed">
+                <div className=" hovered flex flex-col items-center cursor-pointer">
+                  <HomeIcon className=" text-gray-600  " />
+                  <span className=" text-gray-500 text-xs">Home</span>
+                </div>
+              </Link>
+              <Link to="/people">
+                <div className="hovered flex flex-col items-center cursor-pointer ">
+                  <PeopleIcon className=" text-gray-600  " />
+                  <span className=" text-gray-500 text-xs">People</span>
+                </div>
+              </Link>
               <div className="hovered flex flex-col items-center cursor-pointer ">
                 <BusinessCenterIcon className=" text-gray-600  " />
                 <span className=" text-gray-500 text-xs">Jobs</span>
@@ -73,10 +77,10 @@ function Header() {
                   </span>
                 </div>
               </Link>
-              <div className="hovered flex flex-col items-center cursor-pointer ">
+              {/* <div className="hovered flex flex-col items-center cursor-pointer ">
                 <AppsIcon className=" text-gray-600 " />
                 <span className=" text-gray-500 text-xs">Work </span>
-              </div>
+              </div> */}
               <div className="hovered flex flex-col items-center cursor-pointer ">
                 <span className=" text-amber-700 text-xs text-center">
                   Try Premium for <br /> free{" "}

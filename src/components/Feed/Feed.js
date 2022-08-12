@@ -19,7 +19,6 @@ import {
 } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { AuthContext } from "../Context/Context";
-// import { async } from "@firebase/util";
 
 function Feed() {
   const { userName, userImage } = useContext(AuthContext);
@@ -56,6 +55,7 @@ function Feed() {
               console.log("Upload is running");
               break;
           }
+          setProgress(true);
         },
         (error) => {
           console.log(error);
@@ -73,9 +73,13 @@ function Feed() {
 
     const getPosts = async () => {
       const data = await getDocs(collectionRef);
-      setPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      setPosts(
+        data.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }))
+      );
     };
-
     getPosts();
   }, [image]);
 
@@ -107,6 +111,7 @@ function Feed() {
     alert("Post added successfully");
     setFormData({ body: "", videoUrl: "" });
     setOpen(false);
+    // window.location.reload();
   };
 
   return (
@@ -163,7 +168,7 @@ function Feed() {
                 <button
                   type="submit"
                   className=" bg-blue-500 p-2 text-md text-white font-semibold tracking-wider"
-                  disabled={progress !== null && progress < 100}
+                  // disabled={{progress ? true : false}}
                 >
                   Post
                 </button>

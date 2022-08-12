@@ -63,13 +63,13 @@ function Login() {
             <span> Learn a new skill </span>{" "}
             <i className="fa-solid fa-chevron-right text-gray-500"></i>
           </p>
-          <Link
-            to="/"
+          <button
             className=" flex gap-3 m-auto border border-gray-500 py-2 px-10 rounded-full items-center text-xl text-gray-500 hover:border-2 hover:bg-gray-100 hover:border-gray-800 transition duration-200 "
+            onClick={signInWithGoogle}
           >
             <FcGoogle />
             <span>Sign in with Google</span>
-          </Link>
+          </button>
         </div>
         <img src={loginImage} className=" w-[50%] " alt="" />
       </div>
