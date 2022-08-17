@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../Context/Context";
 
 function Profile() {
-  const { userName, userImage } = useContext(AuthContext);
+  const { userName, userImage, userEmail } = useContext(AuthContext);
 
   return (
     <div>
@@ -29,6 +29,9 @@ function Profile() {
             />
             <h2 className=" pl-10 relative -top-16 font-semibold text-2xl">
               {userName}
+            </h2>
+            <h2 className=" pl-10 relative -top-16 text-md text-gray-500">
+              {userEmail}
             </h2>
             <Link
               to="/feed"

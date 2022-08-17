@@ -77,6 +77,7 @@ function RightSidebar() {
         <div className=" flex gap-4">
           <img
             src={userImage}
+            referrerPolicy="no-referrer"
             className=" w-[4.5rem] h-[4.5rem] rounded-full border border-gray-400 "
             alt=""
           />

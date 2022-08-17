@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-// import avatar from "../../images/avatar.png";
 import PhotoSizeSelectActualIcon from "@mui/icons-material/PhotoSizeSelectActual";
 import SmartDisplayIcon from "@mui/icons-material/SmartDisplay";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
@@ -24,12 +23,26 @@ function Feed() {
   const { userName, userImage } = useContext(AuthContext);
 
   var [posts, setPosts] = useState([]);
-  const [like, setLike] = useState(false);
-  const [heart, setHeart] = useState(false);
   const [open, setOpen] = useState(false);
   const [progress, setProgress] = useState(null);
   const [image, setImage] = useState(null);
   const collectionRef = collection(db, "posts");
+
+  const [like, setLike] = useState([]);
+  const onClickLike = (item) => {
+    let index = like.findIndex((x) => x === item.id);
+    if (index >= 0) like.splice(index, 1);
+    else like.push(item.id);
+    setLike([...like]);
+  };
+
+  const [heart, setHeart] = useState([]);
+  const onClickHeart = (item) => {
+    let index = heart.findIndex((x) => x === item.id);
+    if (index >= 0) heart.splice(index, 1);
+    else heart.push(item.id);
+    setHeart([...heart]);
+  };
 
   const [formData, setFormData] = useState({
     body: "",
@@ -102,15 +115,18 @@ function Feed() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    addDoc(collectionRef, {
-      body: formData.body,
-      videoUrl: formData.videoUrl,
-      imageUrl: formData.imageUrl,
-      timestamp: serverTimestamp(),
-    });
-    alert("Post added successfully");
-    setFormData({ body: "", videoUrl: "" });
-    setOpen(false);
+    if (formData.body || formData.imageUrl || formData.videoUrl) {
+      addDoc(collectionRef, {
+        body: formData.body,
+        videoUrl: formData.videoUrl,
+        imageUrl: formData.imageUrl,
+        timestamp: serverTimestamp(),
+      });
+      alert("Post added successfully");
+      setFormData({ body: "", videoUrl: "" });
+      setOpen(false);
+    } else alert("You cannot submit an empty post!");
+
     // window.location.reload();
   };
 
@@ -123,6 +139,7 @@ function Feed() {
         <div className=" flex gap-2">
           <img
             src={userImage}
+            referrerPolicy="no-referrer"
             className=" w-[48px] h-[48px] rounded-full "
             alt=""
           />
@@ -139,6 +156,7 @@ function Feed() {
                   <img
                     src={userImage}
                     className=" w-[40px] h-[40px] rounded-full "
+                    referrerPolicy="no-referrer"
                     alt=""
                   />
                   <span className=" text-black font-semibold">{userName}</span>
@@ -177,11 +195,17 @@ function Feed() {
           </Dialog>
         </div>
         <div className=" flex justify-between px-6">
-          <div className=" flex gap-3 items-center text-gray-500 cursor-pointer hover:bg-gray-100 px-2 py-2 hover:rounded-md">
+          <div
+            className=" flex gap-3 items-center text-gray-500 cursor-pointer hover:bg-gray-100 px-2 py-2 hover:rounded-md"
+            onClick={handleClickOpen}
+          >
             <PhotoSizeSelectActualIcon className=" text-blue-500" />
             <span className=" text-sm font-semibold">Photo</span>
           </div>
-          <div className=" flex gap-3 items-center text-gray-500 cursor-pointer hover:bg-gray-100 px-2 py-2 hover:rounded-md">
+          <div
+            className=" flex gap-3 items-center text-gray-500 cursor-pointer hover:bg-gray-100 px-2 py-2 hover:rounded-md"
+            onClick={handleClickOpen}
+          >
             <SmartDisplayIcon className=" text-green-500" />
             <span className=" text-sm font-semibold">Video</span>
           </div>
@@ -189,73 +213,78 @@ function Feed() {
             <CalendarMonthIcon className=" text-amber-500" />
             <span className=" text-sm font-semibold">Event</span>
           </div>
-          <div className=" flex gap-3 items-center text-gray-500 cursor-pointer hover:bg-gray-100 px-2 py-2 hover:rounded-md">
+          <div
+            className=" flex gap-3 items-center text-gray-500 cursor-pointer hover:bg-gray-100 px-2 py-2 hover:rounded-md"
+            onClick={handleClickOpen}
+          >
             <NoteAltIcon className=" text-red-500" />
             <span className=" text-sm font-semibold">Write article</span>
           </div>
         </div>
       </div>
       <div>
-        {posts.map((item) => (
-          <div
-            key={item.id}
-            className=" flex flex-col gap-2 bg-white rounded-xl p-3 border border-gray-300 shadow-lg mb-2"
-          >
-            <div className=" flex gap-2 items-center">
-              <img
-                src={userImage}
-                className=" w-[48px] h-[48px] rounded-full "
-                alt=""
-              />
-              <span className=" text-black font-semibold text-sm">
-                {userName}
-              </span>
-            </div>
-            <hr />
-            {item.body && <p>{item.body}</p>}
-            {item.imageUrl && <img src={item.imageUrl} alt="" />}
-            {item.videoUrl && (
-              <iframe
-                src={item.videoUrl}
-                title={item.id}
-                frameBorder="0"
-                className=" w-full h-[20rem] "
-              ></iframe>
-            )}
+        {posts
+          ? posts.map((item) => (
+              <div
+                key={item.id}
+                className=" flex flex-col gap-2 bg-white rounded-xl p-3 border border-gray-300 shadow-lg mb-2"
+              >
+                <div className=" flex gap-2 items-center">
+                  <img
+                    src={userImage}
+                    referrerPolicy="no-referrer"
+                    className=" w-[48px] h-[48px] rounded-full "
+                    alt=""
+                  />
+                  <span className=" text-black font-semibold text-sm">
+                    {userName}
+                  </span>
+                </div>
+                <hr />
+                {item.body && <p>{item.body}</p>}
+                {item.imageUrl && <img src={item.imageUrl} alt="" />}
+                {item.videoUrl && (
+                  <iframe
+                    src={item.videoUrl}
+                    title={item.id}
+                    frameBorder="0"
+                    className=" w-full h-[20rem] "
+                  ></iframe>
+                )}
 
-            <hr />
-            <div className=" flex gap-2">
-              {like ? (
-                <ThumbUpIcon
-                  className=" cursor-pointer text-blue-600 hover:bg-gray-100 px-2 py-2 hover:rounded-md"
-                  fontSize="large"
-                  onClick={() => setLike(!like)}
-                />
-              ) : (
-                <ThumbUpOutlinedIcon
-                  className=" cursor-pointer text-gary-500 hover:bg-gray-100 px-2 py-2 hover:rounded-md"
-                  fontSize="large"
-                  onClick={() => setLike(!like)}
-                />
-              )}
-              {heart ? (
-                <FavoriteOutlinedIcon
-                  className=" cursor-pointer text-red-500 hover:bg-gray-100 px-2 py-2 hover:rounded-md"
-                  fontSize="large"
-                  onClick={() => setHeart(!heart)}
-                />
-              ) : (
-                <FavoriteBorderOutlinedIcon
-                  className=" cursor-pointer text-gary-500 hover:bg-gray-100 px-2 py-2 hover:rounded-md"
-                  fontSize="large"
-                  onClick={() => setHeart(!heart)}
-                />
-              )}
-            </div>
-          </div>
-        ))}
+                <hr />
+                <div className=" flex gap-2">
+                  <button onClick={() => onClickLike(item)}>
+                    {like.findIndex((x) => x === item.id) >= 0 ? (
+                      <ThumbUpIcon
+                        className=" cursor-pointer text-blue-600 hover:bg-gray-100 px-2 py-2 hover:rounded-md"
+                        fontSize="large"
+                      />
+                    ) : (
+                      <ThumbUpOutlinedIcon
+                        className=" cursor-pointer text-gary-500 hover:bg-gray-100 px-2 py-2 hover:rounded-md"
+                        fontSize="large"
+                      />
+                    )}
+                  </button>
+                  <button onClick={() => onClickHeart(item)}>
+                    {heart.findIndex((x) => x === item.id) >= 0 ? (
+                      <FavoriteOutlinedIcon
+                        className=" cursor-pointer text-red-500 hover:bg-gray-100 px-2 py-2 hover:rounded-md"
+                        fontSize="large"
+                      />
+                    ) : (
+                      <FavoriteBorderOutlinedIcon
+                        className=" cursor-pointer text-gary-500 hover:bg-gray-100 px-2 py-2 hover:rounded-md"
+                        fontSize="large"
+                      />
+                    )}
+                  </button>
+                </div>
+              </div>
+            ))
+          : "Loading..."}
       </div>
-      {/* </div> */}
     </div>
   );
 }

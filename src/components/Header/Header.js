@@ -68,6 +68,7 @@ function Header() {
                 <div className="hovered flex flex-col items-center cursor-pointer ">
                   <img
                     src={isAuth ? userImage : avatar}
+                    referrerPolicy="no-referrer"
                     className=" w-[1.7rem] h-[1.7rem] rounded-full"
                     alt=""
                   />

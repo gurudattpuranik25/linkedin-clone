@@ -12,10 +12,12 @@ function Context({ children }) {
   const user = auth.currentUser;
   var userImage = "";
   var userName = "";
+  var userEmail = "";
 
   if (user !== null) {
     userImage = user.photoURL;
     userName = user.displayName;
+    userEmail = user.email;
   } else {
     userImage = avatar;
     userName = "Me";
@@ -23,7 +25,7 @@ function Context({ children }) {
 
   const history = useHistory();
 
-  // console.log(auth);
+  console.log(auth);
 
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider).then(() => {
@@ -48,6 +50,7 @@ function Context({ children }) {
     signOutUser,
     userImage,
     userName,
+    userEmail,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

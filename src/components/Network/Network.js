@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import Header from "../Header/Header";
 import peopleBg from "../../images/people-background.JPG";
 import LeftSideBar from "../LeftSidebar/LeftSideBar";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function Network() {
   const [userData, setUserData] = useState("");
-  // const [connectList, setConnectList] = useState([]);
-  // const [isConnected, setIsConnected] = useState(false);
 
   const url = "https://randomuser.me/api/?results=20";
 
@@ -21,15 +20,13 @@ function Network() {
       .then((data) => setUserData(data.results));
   };
 
-  // const connectHandler = (userId) => {
-  //   if (connectList.includes(userId)) {
-  //     return;
-  //   } else {
-  //     setConnectList([...connectList, userId]);
-  //     connectList.forEach(() => setIsConnected(true));
-  //   }
-  // };
-  // console.log(connectList);
+  const [connect, setConnect] = useState([]);
+  const onClickConnect = (item) => {
+    let index = connect.findIndex((x) => x === item.login.uuid);
+    if (index >= 0) connect.splice(index, 1);
+    else connect.push(item.login.uuid);
+    setConnect([...connect]);
+  };
 
   return (
     <div>
@@ -42,7 +39,7 @@ function Network() {
         </div>
         <div>
           <div className="my-16  grid grid-cols-4 gap-4 bg-white p-4 rounded-xl">
-            {userData &&
+            {userData ? (
               userData.map((item) => (
                 <div
                   key={item.login.uuid}
@@ -66,13 +63,20 @@ function Network() {
                   </p>
                   <button
                     className=" bg-white border-2 border-blue-500 hover:bg-sky-100 w-[80%] py-1 my-2 rounded-lg"
-                    // onClick={() => connectHandler(item.login.uuid)}
+                    onClick={() => onClickConnect(item)}
                   >
                     {/* {isConnected ? "Connected" : "Connect"} */}
-                    Connect
+                    {connect.findIndex((x) => x === item.login.uuid) >= 0 ? (
+                      <span className=" font-semibold">Connected</span>
+                    ) : (
+                      "Connect"
+                    )}
                   </button>
                 </div>
-              ))}
+              ))
+            ) : (
+              <CircularProgress />
+            )}
           </div>
         </div>
       </div>
