@@ -7,10 +7,8 @@ import HomeIcon from "@mui/icons-material/Home";
 import PeopleIcon from "@mui/icons-material/People";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import MessageIcon from "@mui/icons-material/Message";
-import AppsIcon from "@mui/icons-material/Apps";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Context/Context";
-import { auth } from "../../firebase-config";
 import "./Header.css";
 
 function Header() {

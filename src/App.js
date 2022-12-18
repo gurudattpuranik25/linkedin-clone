@@ -4,8 +4,6 @@ import Main from "./components/Main/Main";
 import Profile from "./components/Profile/Profile";
 import Context from "./components/Context/Context";
 import Network from "./components/Network/Network";
-import { useEffect } from "react";
-import { auth } from "./firebase-config";
 
 function App() {
   return (

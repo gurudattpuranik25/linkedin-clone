@@ -1,8 +1,6 @@
 import React, { useContext } from "react";
 import profileBg from "../../images/image-background.jpg";
-import avatar from "../../images/avatar.png";
 import { Link } from "react-router-dom";
-import { auth } from "../../firebase-config";
 import { AuthContext } from "../Context/Context";
 
 function LeftSideBar() {

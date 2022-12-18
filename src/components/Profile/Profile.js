@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import Header from "../Header/Header";
 import RightSidebar from "../RightSidebar/RightSidebar";
 import profileBg from "../../images/image-background.jpg";
-import avatar from "../../images/avatar.png";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Context/Context";
 

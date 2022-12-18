@@ -3,9 +3,7 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import News from "./News";
-import avatar from "../../images/avatar.png";
 import aramco from "../../images/aramco.jpg";
-import { auth } from "../../firebase-config";
 import { AuthContext } from "../Context/Context";
 
 function RightSidebar() {
