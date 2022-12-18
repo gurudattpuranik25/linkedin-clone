@@ -67,6 +67,8 @@ function Feed() {
             case "running":
               console.log("Upload is running");
               break;
+            default:
+              return;
           }
           setProgress(true);
         },
@@ -94,6 +96,7 @@ function Feed() {
       );
     };
     getPosts();
+    // eslint-disable-next-line
   }, [image]);
 
   const handleClickOpen = () => {

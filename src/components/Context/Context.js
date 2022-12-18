@@ -8,6 +8,7 @@ export const AuthContext = createContext();
 
 function Context({ children }) {
   const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth"));
+  const [userDetails, setUserDetails] = useState({});
 
   const user = auth.currentUser;
   var userImage = "";
@@ -25,12 +26,14 @@ function Context({ children }) {
 
   const history = useHistory();
 
-  console.log(auth);
+  console.log(user);
 
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider).then(() => {
       localStorage.setItem("isAuth", true);
+      localStorage.setItem("userDetails", userName);
       setIsAuth(true);
+      setUserDetails(userName);
     });
     history.push("/feed");
   };
@@ -47,6 +50,7 @@ function Context({ children }) {
   const value = {
     signInWithGoogle,
     isAuth,
+    userDetails,
     signOutUser,
     userImage,
     userName,
