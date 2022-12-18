@@ -28,6 +28,8 @@ function Feed() {
   const [image, setImage] = useState(null);
   const collectionRef = collection(db, "posts");
 
+  console.log(progress);
+
   const [like, setLike] = useState([]);
   const onClickLike = (item) => {
     let index = like.findIndex((x) => x === item.id);
